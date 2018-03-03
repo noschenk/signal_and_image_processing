@@ -6,6 +6,7 @@
 # load modules
 import numpy as np
 import matplotlib.pyplot as plt
+# import pdb; pdb.set_trace()  # python debugger
 
 # Ex 0.1 ------------------------------------------------------------------------------------
 # You are given a function f (x) = x+ x+ x 1 2 +10 sin(x). Create a function ex0(a,b,c)
@@ -88,7 +89,19 @@ plt.imshow(test)
 plt.show()
 
 # ------------------------------------
-
-
 # 0.2.3
-# new exercise
+# image img, compute euclidean distance of each white pixel from the red pixel without the use of any for loop.
+plt.imshow(test)  # the image to work with.
+# store the coordinates of white pixels
+whitepix = find_pixels((1,1,1), test)
+# store the coordinates of the red pixel.
+redpix = find_pixels((1,0,0),test)
+# to calculate the distance nicely, make an array of the shape of whitepix and just put the red pixels
+#    coordinates over and over in it.
+redpix_large = np.tile(redpix, (whitepix.shape[0],1))
+# calculate the distances between two matrices (arrays)
+dist = whitepix-redpix_large
+# take the euclidean distance
+edist = np.linalg.norm(dist, 1)
+
+# 0.2.4
