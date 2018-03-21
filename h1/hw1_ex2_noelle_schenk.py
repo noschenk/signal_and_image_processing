@@ -77,7 +77,7 @@ plt.xlabel('frequency w')
 # sfr_original
 # e.g. to sample 50 samples from my 1000, I need to take
 # 1000 / 50 = every 20 samples
-down_freq = 2
+down_freq = 50
 indices = np.arange(0, down_freq * 10, 1) * (10000 // (down_freq * 10))
 indices.shape[0] == down_freq * 10
 # power spectrum values
@@ -99,12 +99,14 @@ plt.ylabel('power spectral density F(w)')
 plt.xlabel('frequency w')
 plt.suptitle('Sampling frequency = ' + str(down_freq) + ' Hz', fontsize=16)
 
+
 # Nyquist theorem : take a sampling width that is : dx <= 1/2w
 # w is the maximum frequency which is f2 which is 5.
 # dx <= 1/10 <-> dx > 10 Hz
 # all sampling frequencies lower (and inclusive) than 10 Hz lead to aliasing.
 
 
+# ------------------------------
 # ex2.3
 # sc.signal.butter()
 # generate Butterworth low-pass filter coefficients:
@@ -118,3 +120,27 @@ w, h = sig.freqs(b, a)
 plt.plot(w, 20 * np.log10(abs(h)))
 
 # check out the sample functions and forum!
+down_freq = 10
+indices = np.arange(0, down_freq * 10, 1) * (10000 // (down_freq * 10))
+indices.shape[0] == down_freq * 10
+# power spectrum values
+t_down_sampled = scfft.fft(samples[indices])
+t_down_sampled = np.sqrt(np.power(t_down_sampled.imag, 2) + np.power(t_down_sampled.real, 2))
+t_freqs = np.linspace(0, down_freq, 10*down_freq, endpoint=False)
+# plot both spaces
+plt.subplot(1, 2, 1)
+plt.plot(fs, samples)
+plt.plot(fs[indices], samples[indices], 'ro')
+plt.plot(fs[indices], samples[indices])
+plt.title('Time domain')
+plt.ylabel('signal f(t)')
+plt.xlabel('time t [s]')
+plt.subplot(1, 2, 2)
+plt.plot(t_freqs, t_down_sampled)
+plt.title('Power spectrum')
+plt.ylabel('power spectral density F(w)')
+plt.xlabel('frequency w')
+plt.suptitle('Sampling frequency = ' + str(down_freq) + ' Hz', fontsize=16)
+
+# nothing more done
+
