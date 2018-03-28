@@ -109,6 +109,18 @@ def DoG(img, sigma_1, sigma_2, filter_size):
     # OUTPUTS
     # @ dog           : Difference of Gaussians of size
     #                   (M+filter_size-1)x(N_filter_size-1)
+    # if the filter has an even number, numpy automatically takes one value less.
+    if filter_size % 2 == 0:
+        filter_size -= 1
+        print('filter_size changed to :', filter_size)
+    img_filtered_1 = gconv(img, sigma_1, filter_size)
+    img_filtered_2 = gconv(img, sigma_2, filter_size)
+    # pad the original image with zeros so it has the same shape as the filtered ones
+    padwidth = int((filter_size - (filter_size % 2)) / 2)
+    img_padded = np.pad(img, pad_width=padwidth, mode='constant')
+    # calculate the difference of the filtered images
+    resimg = img_filtered_1 - img_filtered_2
+    return resimg
 
     pass
 
