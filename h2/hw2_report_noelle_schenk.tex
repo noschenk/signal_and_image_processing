@@ -72,7 +72,7 @@
 % ------------------------------------------------------------------------- document descriptions
 \title{Signal and Image Processing - HW2}
 \author{Noëlle Schenk}
-\date{\today}
+\date{\today, time invested : 9.5h}
 % ------------------------------------------------------------------------- literature references
 \usepackage[backend=biber]{biblatex} % to use biber for my citations
 \addbibresource{../../../literature/pc_exserta_reflist.bib} % where latex can find the .bib file
@@ -82,6 +82,9 @@
 \maketitle
 % \tableofcontents
 % \newpage
+\section{Comments}
+Please note that I was not able to run the line \lstinline!from tools_template import *! and I don't know exactly why. As I think it will run on your system, I let this line in the code. However, the scripts also work if just \lstinline!python3 tools_template.py! followed by \lstinline!python3 <ex1-3>!, so I hope this counts as running code.
+
 \section{Exercise 1}
 Increasing filter size makes the dark border around the image to be thicker, as the code does handle borders by zero padding. If another way of handling borders would be chosen, this would change. Generally, a larger filter takes into account more neighbors and leads to a higher blurring intensity. \\
 A large sigma gives more weight to far neighbors and therefore also leads to a higher blurring intensity.
