@@ -8,6 +8,8 @@ plt.rcParams['image.cmap'] = 'gray'
 import time
 import pdb
 from tools_template import *
+# import os
+# os.system('python tools_template.py')
 import skimage.io as io
 
 # import os
