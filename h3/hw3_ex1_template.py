@@ -31,7 +31,7 @@ from skimage import feature, color
 # plt.title(str(p[0]) + ' * x + ' + str(p[1]))
 # plt.suptitle('from points ' + str(points[0]) + ' and ' + str(points[1]))
 
-def fit_line(points):
+def find_line_model(points):
     # Fits a line y=m*x+c through two given points (x0,y0) and
     # (x1,y1). Returns the slope m and the y-intersect c of the line.
     #
@@ -68,7 +68,6 @@ def fit_line(points):
         m = (points[1, 1] - points[0, 1]) / (points[1, 0] - points[0, 0])
         # calculate c using the first point
         c = points[0, 1] - m * points[0, 0]
-
     # # calculate c using the first point
     # c = points[0, 1] - m * points[0, 0]
     # # calculate c using the second point
@@ -77,7 +76,9 @@ def fit_line(points):
     # # attention: it's comparing floats, so accept some errors when comparing!
     # if np.isclose(c, c_control):
     #     return m, c
-    return m, c
+    return(m, c)
+
+
 
 ################
 # EXERCISE 1.2 #
@@ -94,13 +95,11 @@ def point_to_line_dist(m, c, x0, y0):
     #
     # Outputs:
     #   dist: the minimal distance between the point and the line.
+    #
 
     #
-    # REPLACE THE FOLLOWING WITH YOUR CODE
-    #
-    dist = 0
-
-    return dist
+    di = 0
+    return di
 
 
 ################
