@@ -1,55 +1,6 @@
-\documentclass[a4paper,8pt]{extarticle}\usepackage[]{graphicx}\usepackage[]{color}
-%% maxwidth is the original width if it is less than linewidth
-%% otherwise use linewidth (to make sure the graphics do not exceed the margin)
-\makeatletter
-\def\maxwidth{ %
-  \ifdim\Gin@nat@width>\linewidth
-    \linewidth
-  \else
-    \Gin@nat@width
-  \fi
-}
-\makeatother
-
-\definecolor{fgcolor}{rgb}{0.345, 0.345, 0.345}
-\newcommand{\hlnum}[1]{\textcolor[rgb]{0.686,0.059,0.569}{#1}}%
-\newcommand{\hlstr}[1]{\textcolor[rgb]{0.192,0.494,0.8}{#1}}%
-\newcommand{\hlcom}[1]{\textcolor[rgb]{0.678,0.584,0.686}{\textit{#1}}}%
-\newcommand{\hlopt}[1]{\textcolor[rgb]{0,0,0}{#1}}%
-\newcommand{\hlstd}[1]{\textcolor[rgb]{0.345,0.345,0.345}{#1}}%
-\newcommand{\hlkwa}[1]{\textcolor[rgb]{0.161,0.373,0.58}{\textbf{#1}}}%
-\newcommand{\hlkwb}[1]{\textcolor[rgb]{0.69,0.353,0.396}{#1}}%
-\newcommand{\hlkwc}[1]{\textcolor[rgb]{0.333,0.667,0.333}{#1}}%
-\newcommand{\hlkwd}[1]{\textcolor[rgb]{0.737,0.353,0.396}{\textbf{#1}}}%
-\let\hlipl\hlkwb
-
-\usepackage{framed}
-\makeatletter
-\newenvironment{kframe}{%
- \def\at@end@of@kframe{}%
- \ifinner\ifhmode%
-  \def\at@end@of@kframe{\end{minipage}}%
-  \begin{minipage}{\columnwidth}%
- \fi\fi%
- \def\FrameCommand##1{\hskip\@totalleftmargin \hskip-\fboxsep
- \colorbox{shadecolor}{##1}\hskip-\fboxsep
-     % There is no \\@totalrightmargin, so:
-     \hskip-\linewidth \hskip-\@totalleftmargin \hskip\columnwidth}%
- \MakeFramed {\advance\hsize-\width
-   \@totalleftmargin\z@ \linewidth\hsize
-   \@setminipage}}%
- {\par\unskip\endMakeFramed%
- \at@end@of@kframe}
-\makeatother
-
-\definecolor{shadecolor}{rgb}{.97, .97, .97}
-\definecolor{messagecolor}{rgb}{0, 0, 0}
-\definecolor{warningcolor}{rgb}{1, 0, 1}
-\definecolor{errorcolor}{rgb}{1, 0, 0}
-\newenvironment{knitrout}{}{} % an empty environment to be redefined in TeX
-
-\usepackage{alltt}
-\usepackage[a4paper,top=3cm,bottom=2cm,left=2cm,right=2cm,marginparwidth=1.75cm]{geometry}
+\documentclass[a4paper,8pt]{extarticle}
+\usepackage[]{graphicx}
+\usepackage[]{color}
 \usepackage[english]{babel}  % force American English hyphenation patterns
 \usepackage[utf8]{inputenc}  % unicode
 % \usepackage{graphicx}
@@ -57,27 +8,17 @@
 \usepackage{xcolor}  % have more than basic colors
 \definecolor{mygray}{rgb}{0.8,0.8,0.8}
 \usepackage{hyperref}
-%\usepackage{todo}
-\usepackage{todonotes} % to be able to add corrections
-\usepackage[color]{changebar}  % to be able to add corrections
-\cbcolor{red} % color of the changebar
-\usepackage[nottoc,notlot,notlof]{tocbibind} % makes bibliography appear in toc
 \usepackage{listings}  % include code, code style
 \lstset{basicstyle=\ttfamily, breaklines = true, backgroundcolor=\color{mygray},language=bash,basicstyle=\ttfamily,columns=fullflexible}
 \usepackage{wrapfig}  % figures can be wrapped in text
-\usepackage{mathtools}  % have math symbols
+% \usepackage{mathtools}  % have math symbols
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{booktabs}  % to make professional tables
 % ------------------------------------------------------------------------- document descriptions
-\title{Signal and Image Processing - HW2}
+\title{Signal and Image Processing - HW3}
 \author{Noëlle Schenk}
 \date{\today, time invested : 9.5h}
-% ------------------------------------------------------------------------- literature references
-\usepackage[backend=biber]{biblatex} % to use biber for my citations
-\addbibresource{../../../literature/pc_exserta_reflist.bib} % where latex can find the .bib file
-% -------------------------------------------------------------------------
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 \begin{document}
 \maketitle
 % \tableofcontents
@@ -86,23 +27,64 @@
 none
 
 \section{Exercise 1}
-\subsection{Exercise 1.1}
-
 \begin{figure}
-  \caption{Gaussian pyramid.}
+  \caption{horizontal line example.}
   \centering
-    \includegraphics[width=0.6\textwidth]{h3/ex1.1_horizontal_line_example.png}
+    \includegraphics[width=0.6\textwidth]{ex1_1_horizontal_line_example.png}
   \label{fig:horizontal}
   \caption{Line plot for a line that has been added minimal noise to not be perfectly horizontal any more.}
 \end{figure}
 
-Adding minimal noise for vertical and horizontal lines gives almost horizontal and almost vertical lines. \texttt{sys.float_info.epsilon} gives the smallest floating point number that is possible in python. A possible horizontal line plot can look like the one in Figure \ref{fig:horizontal}. 
+\subsection{Exercise 1.1}
+Adding minimal noise for vertical and horizontal lines gives almost horizontal and almost vertical lines. \texttt{sys.float\_info.epsilon} gives the smallest floating point number that is possible in python. A possible horizontal line plot can look like the one in Figure \ref{fig:horizontal}. 
 
 \subsection{Exercise 1.2}
-Minimal distance from point to line: \[d(line, x_{0}, y_{0}) = \frac{| ax_0 + by_0 + c|}{\sqrt{a^2 + b^2}} \]
+The distance from a point $(x_0, y_0)$ to a line $y = mx + b \Leftrightarrow mx + (-1)y + b = 0$ is given by \[ d = \frac{| mx_0 + (-1) y_0 + b |}{\sqrt{m^2 + (-1)^2}} = \frac{|mx_0 - y_0 + b |}{m} \]
 
-% cd ~/Documents/signal_and_image_processing/h2
-% just run : ./runlatex.sh
+
+
+\subsection{Exercise 1.3}
+
+\begin{figure}
+  \caption{Choice of sigma.}
+  \centering
+    \includegraphics[width=0.32\textwidth]{ex1_bridge_sigma1.png}
+    \includegraphics[width=0.32\textwidth]{ex1_pool_sigma1.png}
+    \includegraphics[width=0.32\textwidth]{ex1_tennis_sigma1.png}
+    
+    \includegraphics[width=0.32\textwidth]{ex1_bridge_sigma6.png}
+    \includegraphics[width=0.32\textwidth]{ex1_pool_sigma6.png}
+    \includegraphics[width=0.32\textwidth]{ex1_tennis_sigma6.png}
+
+  \label{fig:sigma}
+  \caption{Figures above: sigma = 1, figures below: sigma = 6. The smoothing parameter sigma defines how much noise is left in the image. Its choice depends on our images - if the line to detect is well contrasted, we can put sigma higher and smooth out some noise. If the line is less well detectable, sigma must be smaller. Here, with a sigma of 1 we would have much too much noise. We only search the best fitting line, reducing noise is therefore required. With sigma = 6, we still see the most dominant lines in the images while much noise is smoothed out. It is the highest possible value where the dominant lines are still visible.}
+\end{figure}
+See figure \ref{fig:sigma}.
+
+
+\subsection{Exercise 1.5}
+
+\begin{figure}
+  \caption{RANSAC.}
+  \centering
+    \includegraphics[width=0.32\textwidth]{ex1_5_edgemap1.png}
+    \includegraphics[width=0.32\textwidth]{ex1_5_lines.png}
+    
+    \includegraphics[width=0.32\textwidth]{ex1_5_edgemap2.png}   
+    \includegraphics[width=0.32\textwidth]{ex1_5_lines2.png}
+    \includegraphics[width=0.32\textwidth]{ex1_5_edgemap22.png}
+
+    \includegraphics[width=0.32\textwidth]{ex1_5_edgemap3.png}   
+    \includegraphics[width=0.32\textwidth]{ex1_5_edgemap31.png}
+    \includegraphics[width=0.32\textwidth]{ex1_5_edgemap34.png}
+    
+  \label{fig:ransac}
+  \caption{\textbf{RANSAC with 500 iterations:} Above : RANSAC on the sample image 'synthetic'. The noise added to the image is almost completely removed by smoothing and the line can be detected very well. Middle : RANSAC on the image 'bridge'. As ransac randomly samples points from an image, the perfect line can not always be detected. Either the code must be run more than once or the number of iteration should be increased. The same problem is also shown below with the sample image 'pool'. The shown issue can happen with all images (including 'synthetic'.}
+\end{figure}
+RANSAC performed on example images, see figure \ref{fig:ransac}.
+
+
+
 
 % or run all following commands (are in runlatex.sh)
 % KNITR
@@ -112,4 +94,3 @@ Minimal distance from point to line: \[d(line, x_{0}, y_{0}) = \frac{| ax_0 + by
 % pdflatex lab_knitr
 % gnome-open lab_knitr.pdf
 \end{document}
-\grid

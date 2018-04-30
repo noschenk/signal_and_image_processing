@@ -5,7 +5,6 @@ import random
 import os.path
 from scipy.misc import imread
 import utils as utls
-
 #
 # Constants
 #
@@ -43,7 +42,7 @@ if showResults:
     # fill it from
     im_mask_fill = np.copy(im_array)
     im_mask_fill[np.where(fill_region)] = [0, 0 , 0]
-    texture_outline = utls.find_edge(texture_region)
+    texture_outline = find_edge(texture_region) # CHANGE after to utls.find_edge...
     im_mask_fill[np.where(texture_outline)] = [255, 255, 255]
 
     # show it
@@ -69,10 +68,10 @@ assert((texture_img.shape[0] > patchSize) and
 #
 # Initialize im_filled for texture synthesis (i.e., set fill pixels to 0)
 #
-
-im_filled = im.copy()
+# copy the image with the donkey
+im_filled = im_array.copy()
 im_filled[fill_indices] = 0
-
+# plt.imshow(im_filled)  # the image is still not filled
 #
 # Fill the masked region
 #
@@ -80,7 +79,7 @@ while (len(fill_indices[0])  > 0):
     print("Number of pixels remaining = ", len(fill_indices[0]) )
 
     # Set fill_region_edge to pixels on the boundary of the current fill_region
-    fill_region_edge = utls.find_edge(fill_region)
+    fill_region_edge = find_edge(fill_region) # CHANGE after to utls.find_edge...
     edge_pixels = fill_region_edge.nonzero()
 
     while(len(edge_pixels[0]) > 0):
@@ -95,7 +94,7 @@ while (len(fill_indices[0])  > 0):
         #
         # Compute masked SSD of patch_to_fill and texture_img
         #
-        ssd_img = utls.compute_ssd(patch_to_fill, patch_mask, texture_img, patch_half_size)
+        ssd_img = compute_ssd(patch_to_fill, patch_mask, texture_img, patch_half_size) # CHANGE after to utls.comp...
 
         # Select the best texture patch
         selected_center_i, selected_center_j = None, None
@@ -103,7 +102,7 @@ while (len(fill_indices[0])  > 0):
         #
         # Copy patch into masked region
         #
-        im_filled = utls.copy_patch(im_filled, patch_mask, texture_img, patch_center_i, patch_center_j, selected_center_j, selected_center_j, patch_half_size)
+        im_filled = copy_patch(im_filled, patch_mask, texture_img, patch_center_i, patch_center_j, selected_center_j, selected_center_j, patch_half_size) # CHANGE after to utls.copy...
 
         # Update fill_region_edge and fill_region by removing locations that overlapped the patch
 
