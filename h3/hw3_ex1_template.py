@@ -98,13 +98,57 @@ def point_to_line_dist(m, c, x0, y0):
     #
 
     #
-    di = 0
+    di = abs((m*x0) - y0 + c) / m
     return di
 
+# point_to_line_dist(1, 2, 2, 5)
+# # example
+# m = 1
+# c = 2
+# x = np.arange(0,10, dtype=np.float)
+# y = m * x + c
+# plt.plot(x, y)
+# x0 = 2
+# y0 = 5
+# plt.plot(x0, y0, 'bo')
+# dist = abs((m*x0) - y0 + c) / m
 
 ################
 # EXERCISE 1.3 #
 ################
+
+tennis = plt.imread('tennis.jpg').astype(np.uint8)
+np.type(tennis)
+# change to float32
+tennis = np.float32(tennis / 256)
+plt.imshow(tennis)
+bridge = plt.imread('bridge.jpg').astype(np.uint8)
+bridge = np.float32(bridge / 256)
+pool = plt.imread('pool.jpg').astype(np.uint8)
+pool = np.float32(pool / 256)
+# convert to grayscale
+bw_tennis = color.rgb2gray(tennis)
+bw_bridge = color.rgb2gray(bridge)
+bw_pool = color.rgb2gray(pool)
+plt.imshow(bw_tennis)
+plt.imshow(bw_bridge)
+plt.imshow(bw_pool)
+sig = 6
+ctennis = feature.canny(bw_tennis, sigma=sig)
+cpool = feature.canny(bw_pool, sigma=sig)
+cbridge = feature.canny(bw_bridge, sigma=sig)
+plt.imshow(cpool)
+plt.imshow(ctennis)
+plt.imshow(cbridge)
+
+# test
+synt = plt.imread('synthetic.jpg').astype(np.float32)
+synt = color.rgb2gray(synt)
+plt.imshow(synt)
+csynt = feature.canny(synt, sigma=6)
+plt.imshow(csynt)
+# 20, 15 : whole image black --> too much smoothing
+# 10 : only net is visible
 
 def edge_map(img):
     # Returns the edge map of a given image.
@@ -114,15 +158,13 @@ def edge_map(img):
     #
     # Outputs:
     #   edges: the edge map of image
-
-    #
-    # REPLACE THE FOLLOWING WITH YOUR CODE
-    #
-    edges = np.zeros(img.shape[0:2])
-    #edges[np.random.randint(image.shape[0], size=100), np.random.randint(image.shape[1], size=100)] = 1
-
+    # change type if necessary
+    img = color.rgb2gray(img)
+    edges = feature.canny(img, sigma=6)
     return edges
 
+out = edge_map(tennis)
+plt.imshow(out)
 
 
 ##############################################################################
