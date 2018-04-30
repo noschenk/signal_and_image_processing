@@ -5,6 +5,9 @@ import random
 import os.path
 from scipy.misc import imread
 import utils as utls
+
+import os
+os.chdir('./h3')
 #
 # Constants
 #
@@ -76,7 +79,7 @@ im_filled[fill_indices] = 0
 # Fill the masked region
 #
 while (len(fill_indices[0])  > 0):
-    print("Number of pixels remaining = ", len(fill_indices[0]) )
+    print("Number of pixels remaining = ", len(fill_indices[0]))
 
     # Set fill_region_edge to pixels on the boundary of the current fill_region
     fill_region_edge = find_edge(fill_region) # CHANGE after to utls.find_edge...
