@@ -37,19 +37,20 @@ def compute_ssd(patch, mask, texture, patch_half_size):
     # Outputs:
     #   ssd: numpy array of size (tex_rows - 2 * patch_half_size, tex_cols - 2 * patch_half_size)
 
-    patch_rows, patch_cols = np.shape(patch)[0:2]
-    assert patch_rows == 2 * patch_half_size + 1 and patch_cols == 2 * patch_half_size + 1, "patch size and patch_half_size do not match"
-    tex_rows, tex_cols = np.shape(texture)[0:2]
-    ssd_rows = tex_rows - 2 * patch_half_size
-    ssd_cols = tex_cols - 2 * patch_half_size
-    ssd = np.zeros((ssd_rows, ssd_cols))
-        for ind, value in np.ndenumerate(ssd):
-    # take according pixel as the central pixel of the patch and find the according piece of the "texture" image
-    # tex_center = (ind[0] + patch_half_size, ind[1] + patch_half_size)
-    from_tex = texture[(ind[0]):(ind[0] + 2 * patch_half_size + 1), (ind[1]):(ind[1] + 2 * patch_half_size + 1)]
-    # compare it to patch and calculate ssd (among all 3 dimensions) for values that are 0 only
-from_tex[mask] = [0, 0, 0]
-plt.imshow(from_tex)
+patch_rows, patch_cols = np.shape(patch)[0:2]
+assert patch_rows == 2 * patch_half_size + 1 and patch_cols == 2 * patch_half_size + 1, "patch size and patch_half_size do not match"
+tex_rows, tex_cols = np.shape(texture)[0:2]
+ssd_rows = tex_rows - 2 * patch_half_size
+ssd_cols = tex_cols - 2 * patch_half_size
+ssd = np.zeros((ssd_rows, ssd_cols))
+    # for ind, value in np.ndenumerate(ssd):
+ind = (0,0)
+value = 0
+# take according pixel as the central pixel of the patch and find the according piece of the "texture" image
+# tex_center = (ind[0] + patch_half_size, ind[1] + patch_half_size)
+from_tex = texture[(ind[0]):(ind[0] + 2 * patch_half_size + 1), (ind[1]):(ind[1] + 2 * patch_half_size + 1)]
+# compare it to patch and calculate ssd (among all 3 dimensions) for values that are 0 only
+
 
     # save calculated ssd in ssd array
     #
