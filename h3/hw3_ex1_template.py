@@ -31,7 +31,7 @@ from skimage import feature, color
 # plt.title(str(p[0]) + ' * x + ' + str(p[1]))
 # plt.suptitle('from points ' + str(points[0]) + ' and ' + str(points[1]))
 
-def find_line_model(points):
+def fit_line(points):
     # Fits a line y=m*x+c through two given points (x0,y0) and
     # (x1,y1). Returns the slope m and the y-intersect c of the line.
     #
@@ -117,29 +117,29 @@ def point_to_line_dist(m, c, x0, y0):
 # EXERCISE 1.3 #
 ################
 
-tennis = plt.imread('tennis.jpg').astype(np.uint8)
-np.type(tennis)
-# change to float32
-tennis = np.float32(tennis / 256)
-plt.imshow(tennis)
-bridge = plt.imread('bridge.jpg').astype(np.uint8)
-bridge = np.float32(bridge / 256)
-pool = plt.imread('pool.jpg').astype(np.uint8)
-pool = np.float32(pool / 256)
-# convert to grayscale
-bw_tennis = color.rgb2gray(tennis)
-bw_bridge = color.rgb2gray(bridge)
-bw_pool = color.rgb2gray(pool)
-plt.imshow(bw_tennis)
-plt.imshow(bw_bridge)
-plt.imshow(bw_pool)
-sig = 6
-ctennis = feature.canny(bw_tennis, sigma=sig)
-cpool = feature.canny(bw_pool, sigma=sig)
-cbridge = feature.canny(bw_bridge, sigma=sig)
-plt.imshow(cpool)
-plt.imshow(ctennis)
-plt.imshow(cbridge)
+# tennis = plt.imread('tennis.jpg').astype(np.uint8)
+# np.type(tennis)
+# # change to float32
+# tennis = np.float32(tennis / 256)
+# plt.imshow(tennis)
+# bridge = plt.imread('bridge.jpg').astype(np.uint8)
+# bridge = np.float32(bridge / 256)
+# pool = plt.imread('pool.jpg').astype(np.uint8)
+# pool = np.float32(pool / 256)
+# # convert to grayscale
+# bw_tennis = color.rgb2gray(tennis)
+# bw_bridge = color.rgb2gray(bridge)
+# bw_pool = color.rgb2gray(pool)
+# plt.imshow(bw_tennis)
+# plt.imshow(bw_bridge)
+# plt.imshow(bw_pool)
+# sig = 6
+# ctennis = feature.canny(bw_tennis, sigma=sig)
+# cpool = feature.canny(bw_pool, sigma=sig)
+# cbridge = feature.canny(bw_bridge, sigma=sig)
+# plt.imshow(cpool)
+# plt.imshow(ctennis)
+# plt.imshow(cbridge)
 
 # test
 synt = plt.imread('synthetic.jpg').astype(np.float32)
@@ -163,8 +163,8 @@ def edge_map(img):
     edges = feature.canny(img, sigma=6)
     return edges
 
-out = edge_map(tennis)
-plt.imshow(out)
+# out = edge_map(tennis)
+# plt.imshow(out)
 
 
 ##############################################################################
@@ -172,7 +172,7 @@ plt.imshow(out)
 ##############################################################################
 
 filename = 'synthetic.jpg'
-#filename = 'bridge.jpg'
+# filename = 'bridge.jpg'
 #filename = 'pool.jpg'
 #filename = 'tennis.jpg'
 
@@ -195,9 +195,9 @@ n_samples = 2
 
 ratio = 0
 
+it = 2
 # perform RANSAC iterations
 for it in range(ransac_iterations):
-
     # this shows progress
     sys.stdout.write('\r')
     sys.stdout.write('iteration {}/{}'.format(it+1, ransac_iterations))
@@ -229,6 +229,7 @@ for it in range(ransac_iterations):
         dist = point_to_line_dist(m, c, x0, y0)
 
         # check whether it's an inlier or not
+        # if it's not, find another one.
         if dist < ransac_threshold:
             num += 1
 
@@ -248,5 +249,4 @@ if m != 0 or c != 0:
 plt.imshow(image)
 
 f2.show()
-
 plt.show()
