@@ -16,7 +16,7 @@ from scipy.misc import imread
 # orig = im_array.copy()
 # texture = np.copy(texture_img)
 # patch_half_size = 3
-#
+
 # # acess a random edge pixel, save the current patch and mask
 # a = np.where(find_edge(fill_region))
 # # im_array[a[0][1], a[1][1]] = [0, 0, 255]
