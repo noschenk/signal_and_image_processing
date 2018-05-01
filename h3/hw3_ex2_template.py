@@ -4,7 +4,7 @@ import numpy as np
 import random
 import os.path
 from scipy.misc import imread
-import utils as utls
+# import utils as utls
 
 import os
 os.chdir('./h3')
@@ -21,9 +21,9 @@ showResults = True
 
 # Read input image
 
-filename = 'donkey'
-#filename = 'tomato'
-# filename = 'yacht'
+#filename = 'donkey'
+# filename = 'tomato'
+filename = 'yacht'
 
 # load image
 im_array = imread(filename + '.jpg', mode='RGB')
@@ -93,8 +93,9 @@ while(len(edge_pixels[0]) > 0):
     patch_to_fill = im_filled[(patch_center_i - patch_half_size):(patch_center_i + patch_half_size + 1),
                     (patch_center_j - patch_half_size):(patch_center_j + patch_half_size + 1)]
     patch_mask = patch_to_fill[:, :, 1].copy()
+    patch_mask[patch_mask != 0] = 10
     patch_mask[patch_mask == 0] = 1
-    patch_mask[patch_mask != 1] = 0
+    patch_mask[patch_mask == 10] = 0
     #
     # Compute masked SSD of patch_to_fill and texture_img
     #
@@ -108,8 +109,9 @@ while(len(edge_pixels[0]) > 0):
     im_filled = copy_patch(im_filled, patch_mask, texture_img, patch_center_i, patch_center_j, selected_center_j, selected_center_j, patch_half_size) # CHANGE after to utls.copy...
 
     # Update fill_region_edge and fill_region by removing locations that overlapped the patch
-    fill_region = im_filled[:,:,1].copy()
+    fill_region = im_filled[:,:,0].copy()
     # set missing region to 1
+    fill_region[fill_region != 0] = 200
     fill_region[fill_region == 0] = 1
     fill_region[fill_region != 1] = 0
     fill_region_edge = find_edge(fill_region)
@@ -117,8 +119,8 @@ while(len(edge_pixels[0]) > 0):
     edge_pixels = fill_region_edge.nonzero()
     fill_indices = fill_region.nonzero()
 
-
-
+plt.subplot(1,3,3)
+plt.imshow(im_filled)
 #
 # Output results
 #
