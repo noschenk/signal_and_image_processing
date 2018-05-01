@@ -53,24 +53,24 @@ def compute_ssd(patch, mask, texture, patch_half_size):
         ssd[ind] = np.sum((patch[mask != 1]-from_tex[mask != 1])**2)
     return ssd
 
-plt.imshow
-ssd = compute_ssd(patch, mask, texture, 3)
+# ssd = compute_ssd(patch, mask, texture, 3)
+# plt.imshow(ssd)
 
 ################
 # EXERCISE 2.2 #
 ################
-img = im_mask_fill.copy()
-mask = mask
-iMatchCenter = np.where(ssd == np.max(ssd))[0] - patch_half_size
-jMatchCenter = np.where(ssd == np.max(ssd))[1] - patch_half_size
-iPatchCenter = a[0][1]
-jPatchCenter = a[1][1]
+# img = im_mask_fill.copy()
+# iMatchCenter = np.where(ssd == np.max(ssd))[0] - patch_half_size
+# jMatchCenter = np.where(ssd == np.max(ssd))[1] - patch_half_size
+# iPatchCenter = a[0][1]
+# jPatchCenter = a[1][1]
+#
+# # texture[iMatchCenter, jMatchCenter, : ] = [0,0,255]
+# plt.imshow(texture)
+#
+# plt.imshow(img)
+# img[iPatchCenter, jPatchCenter, :] = [0,0,255]
 
-texture[iMatchCenter, jMatchCenter, : ] = [0,0,255]
-plt.imshow(texture)
-
-plt.imshow(img)
-img[iPatchCenter, jPatchCenter, :] = [0,0,255]
 
 def copy_patch(img, mask, texture, iPatchCenter, jPatchCenter, iMatchCenter, jMatchCenter, patch_half_size):
     # Copies the patch of size (2 * patch_half_size + 1, 2 * patch_half_size + 1)
@@ -92,23 +92,18 @@ def copy_patch(img, mask, texture, iPatchCenter, jPatchCenter, iMatchCenter, jMa
     jPatchTopLeft = jPatchCenter - patch_half_size
     iMatchTopLeft = iMatchCenter - patch_half_size
     jMatchTopLeft = jMatchCenter - patch_half_size
+    res = img.copy()
     for i in range(patchSize):
         for j in range(patchSize):
-        # check if mask is 1 at the given place, if not we can go on to next iteration
-        # if yes, the value of texture at the given place is filled in.
-# HERE!
-if mask[i,j] == 1 :
-    print((i,j))
-    img[iPatchCenter, jPatchCenter]
-
-            #
-            # ADD YOUR CODE HERE
-            #
-
-            pass
-        pass
-
+            print((i,j))
+            # check if mask is 1 at the given place, if not we can go on to next iteration
+            # if yes, the value of texture at the given place is filled in.
+            if mask[i,j] == 1 :
+                res[iPatchTopLeft + i, jPatchTopLeft + j] = texture[iMatchTopLeft + i, jMatchTopLeft + j]
     return res
+# res = copy_patch(img, mask, texture, iPatchCenter, jPatchCenter, iMatchCenter, jMatchCenter, 3)
+# plt.imshow(res)
+# plt.imshow(img)
 
 
 def find_edge(mask):
