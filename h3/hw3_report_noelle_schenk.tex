@@ -84,7 +84,23 @@ See figure \ref{fig:sigma}.
 RANSAC performed on example images, see figure \ref{fig:ransac}.
 
 
+\section{Exercise 2}
 
+\begin{figure}
+  \centering
+    \includegraphics[trim={110 260 110 260}, clip, width=\textwidth]{ex2_tex_synt_donkey.png}
+
+    \includegraphics[trim={90 210 90 210}, clip, width=\textwidth]{ex2_tex_synt_tomato.png}
+
+    \includegraphics[trim={120 270 120 270}, clip, width=\textwidth]{ex2_tex_synt_sea.png}
+    
+  \label{fig:texsynt}
+  \caption{\textbf{Texture synthesis} with the same algorithm on 3 different pictures.}
+\end{figure}
+
+The results are shown in figure \ref{fig:texsynt}. The algorithm produces results for all three input pictures, however not at the same precision as for the donkey picture. \\
+A main problem of my code was the color: the mask was generated from the partly filled image. As image.shape was x,x,3 - I chose one color channel only for the mask. For the green picture, for example, the best color channel to pick would be 1 (green). The picture contains many green values, so the overall intensity is high. Less or even no pixels form the original image are entirely black in this case. However with a lower intensity color channel the mask can get noise when black pixels in the shadow are interpreted as mask.\\
+From the texture point of view, the grass and ocean were recovered best, the tomato results are less natural. This is due to the fact that the patch size is too small to capture the entire repetitive elements of the tomato picture. Also, it would make a difference if only the middle pixel would be replaced in the image to fill.
 
 % or run all following commands (are in runlatex.sh)
 % KNITR
