@@ -44,7 +44,7 @@ def compute_ssd(patch, mask, texture, patch_half_size):
     ssd_cols = tex_cols - 2 * patch_half_size
     ssd = np.zeros((ssd_rows, ssd_cols))
     for ind, value in np.ndenumerate(ssd):
-        print(ind, value)
+        # print(ind, value)
         # take according pixel as the central pixel of the patch and find the according piece of the "texture" image
         # tex_center = (ind[0] + patch_half_size, ind[1] + patch_half_size)
         from_tex = texture[(ind[0]):(ind[0] + 2 * patch_half_size + 1), (ind[1]):(ind[1] + 2 * patch_half_size + 1)]
@@ -95,7 +95,7 @@ def copy_patch(img, mask, texture, iPatchCenter, jPatchCenter, iMatchCenter, jMa
     res = img.copy()
     for i in range(patchSize):
         for j in range(patchSize):
-            print((i,j))
+            # print((i,j))
             # check if mask is 1 at the given place, if not we can go on to next iteration
             # if yes, the value of texture at the given place is filled in.
             if mask[i,j] == 1 :
