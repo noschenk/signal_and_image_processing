@@ -22,7 +22,9 @@ from scipy.misc import imread
 # # im_array[a[0][1], a[1][1]] = [0, 0, 255]
 # patch = im_array[(a[0][1] - patch_half_size):(a[0][1]+ patch_half_size + 1), (a[1][1] -patch_half_size):(a[1][1] + patch_half_size + 1)]
 # # plt.imshow(patch)
-# mask = im_mask_fill[(a[0][1] - patch_half_size):(a[0][1]+ patch_half_size + 1), (a[1][1] -patch_half_size):(a[1][1] + patch_half_size + 1)]
+# mask = fill_region[(a[0][1] - patch_half_size):(a[0][1]+ patch_half_size + 1), (a[1][1] -patch_half_size):(a[1][1] + patch_half_size + 1)]
+# mask[mask == 255] = 1
+# mask = np.float32(mask)
 
 def compute_ssd(patch, mask, texture, patch_half_size):
     # For all possible locations of patch in texture_img, computes sum square
@@ -48,15 +50,27 @@ def compute_ssd(patch, mask, texture, patch_half_size):
         from_tex = texture[(ind[0]):(ind[0] + 2 * patch_half_size + 1), (ind[1]):(ind[1] + 2 * patch_half_size + 1)]
         # compare it to patch and calculate ssd (among all 3 dimensions) for values that are not 0 only,
         # save calculated ssd in ssd array
-        ssd[ind] = np.sum((mask[mask != 0]-from_tex[mask != 0])**2)
+        ssd[ind] = np.sum((patch[mask != 1]-from_tex[mask != 1])**2)
     return ssd
 
-
+plt.imshow
+ssd = compute_ssd(patch, mask, texture, 3)
 
 ################
 # EXERCISE 2.2 #
 ################
+img = im_mask_fill.copy()
+mask = mask
+iMatchCenter = np.where(ssd == np.max(ssd))[0] - patch_half_size
+jMatchCenter = np.where(ssd == np.max(ssd))[1] - patch_half_size
+iPatchCenter = a[0][1]
+jPatchCenter = a[1][1]
 
+texture[iMatchCenter, jMatchCenter, : ] = [0,0,255]
+plt.imshow(texture)
+
+plt.imshow(img)
+img[iPatchCenter, jPatchCenter, :] = [0,0,255]
 
 def copy_patch(img, mask, texture, iPatchCenter, jPatchCenter, iMatchCenter, jMatchCenter, patch_half_size):
     # Copies the patch of size (2 * patch_half_size + 1, 2 * patch_half_size + 1)
@@ -80,6 +94,12 @@ def copy_patch(img, mask, texture, iPatchCenter, jPatchCenter, iMatchCenter, jMa
     jMatchTopLeft = jMatchCenter - patch_half_size
     for i in range(patchSize):
         for j in range(patchSize):
+        # check if mask is 1 at the given place, if not we can go on to next iteration
+        # if yes, the value of texture at the given place is filled in.
+# HERE!
+if mask[i,j] == 1 :
+    print((i,j))
+    img[iPatchCenter, jPatchCenter]
 
             #
             # ADD YOUR CODE HERE
