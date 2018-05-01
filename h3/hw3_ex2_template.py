@@ -88,20 +88,22 @@ while (len(fill_indices[0])  > 0):
     while(len(edge_pixels[0]) > 0):
 
         # Pick a random pixel from the fill_region_edge
-        patch_center_i, patch_center_j = None, None
+        # draw random number from amount of edge_pixels
+        ranint = np.random.randint(0, len(edge_pixels[0]) + 1)
+        patch_center_i, patch_center_j = edge_pixels[0][ranint], edge_pixels[1][ranint]
 
         # Isolate the patch to fill, and its mask
-        patch_to_fill = None
-        patch_mask = None
-
+        patch_to_fill = im_filled[(patch_center_i - patch_half_size):(patch_center_i + patch_half_size + 1),
+                        (patch_center_j - patch_half_size):(patch_center_j + patch_half_size + 1)]
+        patch_mask = patch_to_fill[:,:,1].copy()
+        patch_mask[patch_mask != 0] = 1
         #
         # Compute masked SSD of patch_to_fill and texture_img
         #
         ssd_img = compute_ssd(patch_to_fill, patch_mask, texture_img, patch_half_size) # CHANGE after to utls.comp...
 
         # Select the best texture patch
-        selected_center_i, selected_center_j = None, None
-
+        selected_center_i, selected_center_j = np.where(ssd_img == np.max(ssd_img))[0], np.where(ssd_img == np.max(ssd_img))[1]
         #
         # Copy patch into masked region
         #
