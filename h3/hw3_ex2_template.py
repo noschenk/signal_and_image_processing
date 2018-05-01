@@ -44,7 +44,7 @@ if showResults:
     # create an image with the masked region blacked out, and a rectangle indicating where to
     # fill it from
     im_mask_fill = np.copy(im_array)
-    im_mask_fill[np.where(fill_region)] = [0, 0 , 0]
+    im_mask_fill[np.where(fill_region)] = [0, 0, 0]
     texture_outline = find_edge(texture_region) # CHANGE after to utls.find_edge...
     im_mask_fill[np.where(texture_outline)] = [255, 255, 255]
 
