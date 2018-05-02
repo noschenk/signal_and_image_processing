@@ -4,10 +4,8 @@ import numpy as np
 import random
 import os.path
 from scipy.misc import imread
-# import utils as utls
+import utils as utls
 
-import os
-os.chdir('./h3')
 #
 # Constants
 #
@@ -21,9 +19,9 @@ showResults = True
 
 # Read input image
 
-#filename = 'donkey'
+filename = 'donkey'
 # filename = 'tomato'
-filename = 'yacht'
+# filename = 'yacht'
 
 # load image
 im_array = imread(filename + '.jpg', mode='RGB')
@@ -45,7 +43,7 @@ if showResults:
     # fill it from
     im_mask_fill = np.copy(im_array)
     im_mask_fill[np.where(fill_region)] = [0, 0, 0]
-    texture_outline = find_edge(texture_region) # CHANGE after to utls.find_edge...
+    texture_outline = utls.find_edge(texture_region)
     im_mask_fill[np.where(texture_outline)] = [255, 255, 255]
 
     # show it
@@ -79,7 +77,7 @@ im_filled[fill_indices] = 0
 # Fill the masked region
 
 # Set fill_region_edge to pixels on the boundary of the current fill_region
-fill_region_edge = find_edge(fill_region)  # CHANGE after to utls.find_edge...
+fill_region_edge = utls.find_edge(fill_region)
 edge_pixels = fill_region_edge.nonzero()  # the ones are the edges
 
 while(len(edge_pixels[0]) > 0):
@@ -99,14 +97,14 @@ while(len(edge_pixels[0]) > 0):
     #
     # Compute masked SSD of patch_to_fill and texture_img
     #
-    ssd_img = compute_ssd(patch_to_fill, patch_mask, texture_img, patch_half_size) # CHANGE after to utls.comp...
+    ssd_img = utls.compute_ssd(patch_to_fill, patch_mask, texture_img, patch_half_size)
 
     # Select the best texture patch
     selected_center_i, selected_center_j = np.where(ssd_img == np.max(ssd_img))[0], np.where(ssd_img == np.max(ssd_img))[1]
     #
     # Copy patch into masked region
     #
-    im_filled = copy_patch(im_filled, patch_mask, texture_img, patch_center_i, patch_center_j, selected_center_j, selected_center_j, patch_half_size) # CHANGE after to utls.copy...
+    im_filled = utls.copy_patch(im_filled, patch_mask, texture_img, patch_center_i, patch_center_j, selected_center_j, selected_center_j, patch_half_size)
 
     # Update fill_region_edge and fill_region by removing locations that overlapped the patch
     fill_region = im_filled[:,:,0].copy()
@@ -114,7 +112,7 @@ while(len(edge_pixels[0]) > 0):
     fill_region[fill_region != 0] = 200
     fill_region[fill_region == 0] = 1
     fill_region[fill_region != 1] = 0
-    fill_region_edge = find_edge(fill_region)
+    fill_region_edge = utls.find_edge(fill_region)
     # update edge pixels
     edge_pixels = fill_region_edge.nonzero()
     fill_indices = fill_region.nonzero()
