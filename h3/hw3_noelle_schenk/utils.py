@@ -38,7 +38,7 @@ def compute_ssd(patch, mask, texture, patch_half_size):
     # Outputs:
     #   ssd: numpy array of size (tex_rows - 2 * patch_half_size, tex_cols - 2 * patch_half_size)
     patch_rows, patch_cols = np.shape(patch)[0:2]
-    if (patch_rows == 2 * patch_half_size + 1 and patch_cols == 2 * patch_half_size + 1):
+    if (patch_rows != 2 * patch_half_size + 1 and patch_cols != 2 * patch_half_size + 1):
         plt.subplot(1, 3, 3)
         plt.imshow(im_filled)
         plt.title('Filled Image')
